@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kleber Silveira - Engenheiro de Projetos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Fundo cinza claro */
+            color: #333;
+            padding-top: 64px; /* Espaço para o menu fixo */
+        }
+        .header-bg {
+            background-color: #1a202c; /* Fundo mais escuro para o cabeçalho */
+            color: #fff;
+        }
+        .section-heading {
+            color: #1a202c; /* Texto mais escuro para os títulos de seção */
+            border-bottom: 2px solid #a0aec0; /* Borda cinza claro */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .project-card {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente para cards de projeto */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+            color: #333; /* Força cor de texto escura dentro do card */
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: #4299e1; /* Botão azul */
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #3182ce; /* Azul mais escuro ao passar o mouse */
+        }
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        /* Estilos para o menu de navegação */
+        .navbar {
+            background-color: #1a202c; /* Fundo do menu */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            color: #cbd5e0; /* Cor do texto do link */
+            padding: 0.75rem; /* Ajuste para padding simétrico */
+            border-radius: 0.25rem; /* Padrão quadrado */
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-radius 0.2s ease-in-out, box-shadow 0.2s ease-in-out, clip-path 0.2s ease-in-out; /* Adiciona transição para borda, sombra e clip-path */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* Necessário para posicionar o texto ao passar o mouse */
+        }
+        .nav-link:hover {
+            background-color: #4a5568; /* Fundo ao passar o mouse */
+            color: #fff;
+            border-radius: 9999px; /* Torna o contorno circular ao passar o mouse */
+            box-shadow: 0 0 15px rgba(66, 153, 225, 0.6); /* Sombra circular azul ao passar o mouse */
+        }
+        .nav-link.active {
+            background-color: #4299e1; /* Fundo do link ativo */
+            color: #fff;
+            font-weight: 600;
+            border-radius: 0; /* Remove border-radius para aplicar clip-path */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); /* Forma hexagonal */
+            box-shadow: 0 0 0 3px #4299e1; /* Sombra como contorno do ícone/botão */
+        }
+        .nav-link img {
+            height: 24px;
+            width: 24px;
+            margin-bottom: 4px; /* Espaço entre o ícone e o texto */
+            border-radius: 9999px; /* Torna os ícones redondos */
+        }
+        .nav-link .tooltip-text {
+            position: absolute;
+            bottom: -2.5rem; /* Posição abaixo do ícone */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4a5568; /* Fundo do tooltip */
+            color: #fff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem; /* Tamanho da fonte do tooltip */
+            white-space: nowrap; /* Impede que o texto quebre a linha */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            z-index: 1001; /* Garante que o tooltip fique acima de outros elementos */
+        }
+        .nav-link:hover .tooltip-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Estilos para as seções com imagens de fundo */
+        .section-with-bg {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Para efeito parallax */
+            color: #fff; /* Cor do texto padrão para seções com BG */
+            position: relative;
+        }
+        .section-with-bg .overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Overlay escuro para legibilidade do texto, um pouco mais opaco */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .section-with-bg .content {
+            position: relative;
+            z-index: 2;
+        }
+        .section-with-bg .section-heading {
+            color: #fff; /* Títulos brancos sobre o fundo escuro */
+            border-color: #cbd5e0; /* Borda clara */
+        }
+        /* Cores de texto específicas para seções com fundo claro */
+        #projetos .project-card,
+        #habilidades .grid > div,
+        #cursos ul {
+            color: #333; /* Mantém a cor escura para o conteúdo dentro dos cards */
+        }
+
+        /* Imagens de fundo para cada seção com mais contraste */
+        #sobre {
+            background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre+Mim+-+Tecnologia'); /* Dark Teal */
+        }
+        #projetos {
+            background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos+-+Engenharia'); /* Deep Purple */
+        }
+        #experiencia {
+            background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiência+-+Profissional'); /* Dark Green */
+        }
+        #habilidades {
+            background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Habilidades+-+Inovação'); /* Dark Red/Burgundy */
+        }
+        #educacao {
+            background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educação+-+Conhecimento'); /* Dark Gold/Brown */
+        }
+        #cursos {
+            background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos+-+Treinamento'); /* Dark Grey/Blue */
+        }
+        #contato {
+            background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato+-+Conecte-se'); /* Dark Blue */
+        }
+
+        /* Estilos do Carrossel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Ajuste conforme necessário */
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-image {
+            width: 100%;
+            display: none; /* Esconde todas as imagens por padrão */
+            border-radius: 0.5rem;
+        }
+        .carousel-image.active {
+            display: block; /* Mostra a imagem ativa */
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 0.25rem;
+        }
+        .carousel-button.prev {
+            left: 10px;
+        }
+        .carousel-button.next {
+            right: 10px;
+        }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .dot.active {
+            background-color: #717171;
+        }
+
+        /* Estilos do Modal de Habilidades */
+        .skill-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .skill-modal-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .skill-modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            color: #333;
+        }
+        .skill-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        .skill-modal-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #4299e1;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Menu de Navegação -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo KS no canto superior esquerdo -->
+                <img src="https://placehold.co/40x40/4299e1/FFFFFF?text=KS" alt="Logo Kleber Silveira" class="rounded-full border-2 border-white shadow-md">
+
+                <!-- Itens do menu alinhados à direita -->
+                <div class="flex items-center">
+                    <a href="#sobre" class="nav-link group" data-section="sobre">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=👤" alt="Ícone Sobre Mim">
+                        <span class="tooltip-text">Sobre Mim</span>
+                    </a>
+                    <a href="#projetos" class="nav-link group ml-4" data-section="projetos">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=💡" alt="Ícone Projetos">
+                        <span class="tooltip-text">Projetos</span>
+                    </a>
+                    <a href="#experiencia" class="nav-link group ml-4" data-section="experiencia">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=💼" alt="Ícone Experiência">
+                        <span class="tooltip-text">Experiência</span>
+                    </a>
+                    <a href="#habilidades" class="nav-link group ml-4" data-section="habilidades">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=🛠️" alt="Ícone Habilidades">
+                        <span class="tooltip-text">Habilidades</span>
+                    </a>
+                    <a href="#educacao" class="nav-link group ml-4" data-section="educacao">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=🎓" alt="Ícone Educação">
+                        <span class="tooltip-text">Educação</span>
+                    </a>
+                    <a href="#cursos" class="nav-link group ml-4" data-section="cursos">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=📚" alt="Ícone Cursos">
+                        <span class="tooltip-text">Cursos</span>
+                    </a>
+                    <a href="#contato" class="nav-link group ml-4" data-section="contato">
+                        <img src="https://placehold.co/24x24/FFFFFF/1a202c?text=✉️" alt="Ícone Contato">
+                        <span class="tooltip-text">Contato</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Seção do Cabeçalho -->
+    <header class="header-bg py-16 px-4 rounded-b-lg">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl font-bold mb-4">Kleber Silveira</h1>
+            <p class="text-xl mb-6">Engenheiro de Projetos e Processos | Inovação e Melhoria Contínua</p>
+        </div>
+    </header>
+
+    <!-- Seção Sobre Mim -->
+    <section id="sobre" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Sobre Mim</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                Atuo como Engenheiro com paixão por projetos de produto e processo, sempre buscando a geração de valor, inovação e a melhoria contínua. Minha experiência abrange desde o Desenho Industrial até a Engenharia de Produção, com foco em gestão e otimização.
+            </p>
+            <p class="text-lg leading-relaxed">
+                Minha trajetória profissional é marcada pela liderança de projetos, implantação de culturas de melhoria como Lean, validação técnica de novos produtos e processos, e otimização de custos e indicadores de desempenho. Sou um profissional proativo, com forte habilidade em trabalho em equipe e resolução de problemas.
+            </p>
+        </div>
+    </section>
+
+    <!-- Seção de Projetos em Destaque -->
+    <section id="projetos" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Projetos de Destaque</h2>
+            <div class="grid grid-cols-1 gap-8">
+                <!-- Projeto 1: Manutenção de Respiradores COVID-19 com Carrossel -->
+                <div class="project-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">Manutenção de Respiradores Hospitalares COVID-19</h3>
+                    <p class="text-gray-700 mb-4">
+                        Recuperação voluntária e gratuita de mais de 50 equipamentos para hospitais de Santa Catarina, em cooperação com grandes empresas como BMW, GM, Whirlpool, Nidec e outras.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Meu Papel:</strong> Liderança e execução da manutenção, coordenação com parceiros.
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <strong>Resultados:</strong> +50 equipamentos recuperados, impacto direto na capacidade de atendimento hospitalar durante a pandemia.
+                    </p>
+
+                    <!-- Carrossel de Imagens -->
+                    <div class="carousel-container mt-4">
+                        <img class="carousel-image active" src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Respirador+1" alt="Imagem de Respirador Médico 1">
+                        <img class="carousel-image" src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Respirador+2" alt="Imagem de Respirador Médico 2">
+                        <img class="carousel-image" src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Respirador+3" alt="Imagem de Respirador Médico 3">
+                        <button class="carousel-button prev">&#10094;</button>
+                        <button class="carousel-button next">&#10095;</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <span class="dot" data-index="2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Experiência Profissional -->
+    <section id="experiencia" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Experiência Profissional por Área</h2>
+
+            <!-- Experiências de Gestão -->
+            <h3 class="text-2xl font-bold mb-4 text-white">Gestão</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">K&L Metrologia - Gerente de Marketing e Comercial</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Ago/2023 - Jan/2024)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Planejamento estratégico</li>
+                        <li>Prospecção e Promoção web e redes sociais</li>
+                        <li>Gestão de pessoas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experiências de Projetos -->
+            <h3 class="text-2xl font-bold mb-4 text-white">Projetos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Gestão de projetos e Capex de projeto</li>
+                    </ul>
+                </div>
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">Tecnofibras - Projetista de Produtos</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Jan/2009 - Set/2010)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Viabilidade técnica de peças automobilísticas</li>
+                        <li>Levantamento de custos e orçamento</li>
+                        <li>Propostas, visitas apresentações comerciais.</li>
+                    </ul>
+                </div>
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Projetista de Produtos</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Mai/2004 – Mar/2008)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Desenvolver projetos de novos produtos</li>
+                        <li>Implantação de projetos redução de custo.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experiências de Processo -->
+            <h3 class="text-2xl font-bold mb-4 text-white">Processo</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Validação técnica novos produtos e processos.</li>
+                    </ul>
+                </div>
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">FIESC SENAI - Consultor Empresarial</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Abr/2017 - Mai/2022)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Implantação de Cultura Lean</li>
+                        <li>Mapeamento de processo (BPM, MFV, BI)</li>
+                        <li>Simulação de processo (Gargalos - Flexsim).</li>
+                    </ul>
+                </div>
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">SOCIESC - Consultor Empresarial</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Ago/2012 - Jan/2016)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Simulação de peças injetadas em polímeros.</li>
+                    </ul>
+                </div>
+                <div class="project-card p-6 rounded-lg">
+                    <h4 class="text-xl font-bold mb-2">EMBRACO - Especialista de Processos</h4>
+                    <p class="text-gray-700 text-sm mb-2">(Set/2010 – Jan/2012)</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Validação de novos produtos na fabricação</li>
+                        <li>Melhorar o indicador de OEE e equipes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Habilidades e Ferramentas -->
+    <section id="habilidades" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Habilidades e Ferramentas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Idiomas</h3>
+                    <ul class="list-disc list-inside text-gray-200">
+                        <li data-skill="Inglês Avançado">Inglês (Avançado)</li>
+                        <li data-skill="Espanhol Intermediário">Espanhol (Intermediário)</li>
+                    </ul>
+                </div>
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Ferramentas e Software</h3>
+                    <ul class="list-disc list-inside text-gray-200">
+                        <li data-skill="Power BI">Power BI</li>
+                        <li data-skill="Datastudio">Datastudio</li>
+                        <li data-skill="Flexsim">Flexsim</li>
+                        <li data-skill="Moldflow">Moldflow</li>
+                        <li data-skill="CREO (PRO-E)">CREO (PRO-E)</li>
+                        <li data-skill="NX">NX</li>
+                        <li data-skill="Catia">Catia</li>
+                        <li data-skill="SAP">SAP</li>
+                        <li data-skill="MS Project">MS Project</li>
+                        <li data-skill="Microsoft Office">Microsoft Office</li>
+                        <li data-skill="Google Tools">Google.</li>
+                    </ul>
+                </div>
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Metodologias e Conceitos</h3>
+                    <ul class="list-disc list-inside text-gray-200">
+                        <li data-skill="Green Belt Six Sigma">Green Belt Six Sigma</li>
+                        <li data-skill="Lean Office">Lean Office</li>
+                        <li data-skill="Ferros Fundidos e Defeitos de Fundição">Ferros Fundidos e Defeitos de Fundição</li>
+                        <li data-skill="Confiabilidade de Peças Plástico">Confiabilidade de Peças Plástico</li>
+                        <li data-skill="Caracterização e Reologia de Polímeros - Moldflow">Caracterização e Reologia de Polímeros - Moldflow</li>
+                        <li data-skill="Forjamento">Forjamento</li>
+                        <li data-skill="Poka Yoke">Poka Yoke</li>
+                        <li data-skill="ISO TS 16949">ISO TS 16949</li>
+                        <li data-skill="Auditor Interno ISO 14000">Auditor Interno ISO 14000</li>
+                        <li data-skill="Propriedade Industrial e Intelectual">Propriedade Industrial e Intelectual</li>
+                        <li data-skill="Leader Training - PNL">Leader Training - PNL</li>
+                        <li data-skill="Auditores de Sistema da Qualidade">Auditores de Sistema da Qualidade</li>
+                        <li data-skill="Custos Industriais">Custos Industriais</li>
+                        <li data-skill="Gerenciamento de Projetos">Gerenciamento de Projetos</li>
+                        <li data-skill="GD&T">GD&T</li>
+                        <li data-skill="Pesquisas de Mercado">Pesquisas de Mercado</li>
+                        <li data-skill="Kaizen">Kaizen</li>
+                        <li data-skill="LEAN">LEAN</li>
+                        <li data-skill="JIT">JIT</li>
+                        <li data-skill="OEE">OEE</li>
+                        <li data-skill="5S">5S</li>
+                        <li data-skill="5 Porquês">5 Porquês</li>
+                        <li data-skill="Matriz Pugh">Matriz Pugh</li>
+                        <li data-skill="FMEA">FMEA</li>
+                        <li data-skill="QFD">QFD</li>
+                        <li data-skill="BSC">BSC</li>
+                        <li data-skill="SWOT">SWOT</li>
+                        <li data-skill="Diagrama de Ishikawa">Diagrama de Ishikawa</li>
+                        <li data-skill="Brainstorming">Brainstorming</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Educação -->
+    <section id="educacao" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Educação</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold">Pós-Graduação em Marketing</h3>
+                    <p class="text-gray-200">Faculdade Cenecista Joinville (FCJ) - 2005 a 2006</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold">Graduação em Engenharia de Produção</h3>
+                    <p class="text-gray-200">UNISociesc – TUPY - 2010 a 2013</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold">Graduação em Desenho Industrial (Projeto de Produtos)</h3>
+                    <p class="text-gray-200">UTESC - 1999 a 2004</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold">Técnico em Mecânica</h3>
+                    <p class="text-gray-200">CIS - Dario Geraldo Salles - 1991 a 1995</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Cursos e Treinamentos -->
+    <section id="cursos" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto content">
+            <h2 class="text-3xl font-semibold section-heading">Cursos e Treinamentos</h2>
+            <ul class="list-disc list-inside text-gray-200 space-y-2">
+                <li>Green Belt Six Sigma</li>
+                <li>Lean Office</li>
+                <li>Ferros Fundidos e Defeitos de Fundição</li>
+                <li>Confiabilidade de Peças Plástico</li>
+                <li>Caracterização e Reologia de Polímeros - Moldflow</li>
+                <li>Forjamento</li>
+                <li>Poka Yoke</li>
+                <li>ISO TS 16949</li>
+                <li>Auditor Interno ISO 14000</li>
+                <li>Propriedade Industrial e Intelectual</li>
+                <li>Leader Training - PNL</li>
+                <li>Auditores de Sistema da Qualidade</li>
+                <li>Custos Industriais</li>
+                <li>Gerenciamento de Projetos</li>
+                <li>GD&T</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section id="contato" class="py-16 px-4 section-with-bg">
+        <div class="overlay"></div>
+        <div class="max-w-4xl mx-auto text-center content">
+            <h2 class="text-3xl font-semibold section-heading">Contato</h2>
+            <p class="text-lg mb-4">Fique à vontade para entrar em contato:</p>
+            <div class="space-y-4">
+                <p class="text-lg">
+                    WhatsApp: <a href="tel:+5547999415177" class="text-blue-300 hover:underline">+55 (47) 999415177</a>
+                </p>
+                <p class="text-lg">
+                    <a href="mailto:kleber@markideng.com" class="text-blue-300 hover:underline">kleber@markideng.com</a>
+                </p>
+                <p class="text-lg">
+                    <a href="https://www.markideng.com" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">www.markideng.com</a>
+                </p>
+                <p class="text-lg">
+                    <a href="https://linkedin.com/in/markideng/" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">linkedin.com/in/markideng/</a>
+                </p>
+                <p class="text-lg">
+                    Rua Prudente de Moraes, 613 – Joinville – SC.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="header-bg py-8 px-4 text-center text-sm rounded-t-lg">
+        <p>&copy; 2025 Kleber Silveira. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal de Habilidades -->
+    <div id="skillModalBackdrop" class="skill-modal-backdrop">
+        <div class="skill-modal-content">
+            <button id="skillModalClose" class="skill-modal-close">&times;</button>
+            <h3 id="skillModalTitle" class="text-2xl font-bold mb-4"></h3>
+            <div id="skillModalLoading" class="skill-modal-loading">
+                <div class="spinner"></div>
+            </div>
+            <p id="skillModalDescription" class="text-gray-700"></p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para rolagem suave e destaque do menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Função para destacar o item do menu conforme a rolagem
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 70; // Ajuste para o tamanho do cabeçalho fixo
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Adiciona a classe 'active' ao primeiro item do menu ao carregar a página
+        window.addEventListener('load', () => {
+            const firstSectionId = sections[0].getAttribute('id');
+            const firstNavLink = document.querySelector(`.nav-link[data-section="${firstSectionId}"]`);
+            if (firstNavLink) {
+                firstNavLink.classList.add('active');
+            }
+        });
+
+        // Lógica do Carrossel
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+        const dots = document.querySelectorAll('.dot');
+        let currentImageIndex = 0;
+        let carouselInterval; // Variável para armazenar o ID do intervalo
+
+        function showImage(index) {
+            carouselImages.forEach((img, i) => {
+                img.classList.remove('active');
+                dots[i].classList.remove('active');
+            });
+            carouselImages[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+            showImage(currentImageIndex);
+        }
+
+        function startCarousel() {
+            carouselInterval = setInterval(nextImage, 3000); // Muda a imagem a cada 3 segundos
+        }
+
+        function stopCarousel() {
+            clearInterval(carouselInterval);
+        }
+
+        prevButton.addEventListener('click', () => {
+            stopCarousel(); // Para a rotação automática ao interagir
+            currentImageIndex = (currentImageIndex - 1 + carouselImages.length) % carouselImages.length;
+            showImage(currentImageIndex);
+            startCarousel(); // Reinicia a rotação após a interação
+        });
+
+        nextButton.addEventListener('click', () => {
+            stopCarousel(); // Para a rotação automática ao interagir
+            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+            showImage(currentImageIndex);
+            startCarousel(); // Reinicia a rotação após a interação
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                stopCarousel(); // Para a rotação automática ao interagir
+                const index = parseInt(e.target.dataset.index);
+                currentImageIndex = index;
+                showImage(currentImageIndex);
+                startCarousel(); // Reinicia a rotação após a interação
+            });
+        });
+
+        // Iniciar o carrossel automaticamente ao carregar a página
+        window.addEventListener('load', () => {
+            showImage(currentImageIndex); // Exibe a primeira imagem
+            startCarousel(); // Inicia a rotação
+        });
+
+        // Lógica do Modal de Habilidades com Gemini API
+        const skillItems = document.querySelectorAll('#habilidades li[data-skill]');
+        const skillModalBackdrop = document.getElementById('skillModalBackdrop');
+        const skillModalClose = document.getElementById('skillModalClose');
+        const skillModalTitle = document.getElementById('skillModalTitle');
+        const skillModalLoading = document.getElementById('skillModalLoading');
+        const skillModalDescription = document.getElementById('skillModalDescription');
+
+        skillItems.forEach(item => {
+            item.addEventListener('click', async () => {
+                const skillName = item.dataset.skill;
+                skillModalTitle.textContent = skillName;
+                skillModalDescription.textContent = ''; // Limpa a descrição anterior
+                skillModalLoading.style.display = 'flex'; // Mostra o spinner de carregamento
+                skillModalBackdrop.classList.add('show'); // Mostra o modal
+
+                try {
+                    let chatHistory = [];
+                    const prompt = `Explique o conceito de "${skillName}" de forma concisa e relevante para um contexto profissional.`;
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // A chave de API será fornecida pelo ambiente Canvas
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        skillModalDescription.textContent = text;
+                    } else {
+                        skillModalDescription.textContent = 'Não foi possível obter a explicação. Tente novamente.';
+                    }
+                } catch (error) {
+                    console.error('Erro ao chamar a API Gemini:', error);
+                    skillModalDescription.textContent = 'Erro ao carregar a explicação. Verifique sua conexão ou tente mais tarde.';
+                } finally {
+                    skillModalLoading.style.display = 'none'; // Esconde o spinner de carregamento
+                }
+            });
+        });
+
+        skillModalClose.addEventListener('click', () => {
+            skillModalBackdrop.classList.remove('show'); // Esconde o modal
+        });
+
+        // Fechar modal ao clicar fora dele
+        skillModalBackdrop.addEventListener('click', (e) => {
+            if (e.target === skillModalBackdrop) {
+                skillModalBackdrop.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

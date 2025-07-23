@@ -359,6 +359,14 @@
                         Recuperação voluntária e gratuita de mais de 50 equipamentos para hospitais de Santa Catarina, em cooperação com grandes empresas como BMW, GM, Whirlpool, Nidec e outras.
                     </p>
                     <p class="text-gray-600 text-sm">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         <strong>Meu Papel:</strong> Liderança e execução da manutenção, coordenação com parceiros.
                     </p>
                     <p class="text-600 text-sm">
@@ -514,33 +522,33 @@
                     <ul class="list-disc list-inside text-gray-200">
                         <li data-skill="Green Belt Six Sigma">Green Belt Six Sigma</li>
                         <li data-skill="Lean Office">Lean Office</li>
-                        <li data-skill="Ferros Fundidos e Defeitos de Fundição">Ferros Fundidos e Defeitos de Fundição</li>
-                        <li data-skill="Confiabilidade de Peças Plástico">Confiabilidade de Peças Plástico</li>
-                        <li data-skill="Caracterização e Reologia de Polímeros - Moldflow">Caracterização e Reologia de Polímeros - Moldflow</li>
-                        <li data-skill="Forjamento">Forjamento</li>
-                        <li data-skill="Poka Yoke">Poka Yoke</li>
-                        <li data-skill="ISO TS 16949">ISO TS 16949</li>
-                        <li data-skill="Auditor Interno ISO 14000">Auditor Interno ISO 14000</li>
-                        <li data-skill="Propriedade Industrial e Intelectual">Propriedade Industrial e Intelectual</li>
-                        <li data-skill="Leader Training - PNL">Leader Training - PNL</li>
-                        <li data-skill="Auditores de Sistema da Qualidade">Auditores de Sistema da Qualidade</li>
-                        <li data-skill="Custos Industriais">Custos Industriais</li>
-                        <li data-skill="Gerenciamento de Projetos">Gerenciamento de Projetos</li>
-                        <li data-skill="GD&T">GD&T</li>
-                        <li data-skill="Pesquisas de Mercado">Pesquisas de Mercado</li>
-                        <li data-skill="Kaizen">Kaizen</li>
-                        <li data-skill="LEAN">LEAN</li>
-                        <li data-skill="JIT">JIT</li>
-                        <li data-skill="OEE">OEE</li>
-                        <li data-skill="5S">5S</li>
-                        <li data-skill="5 Porquês">5 Porquês</li>
-                        <li data-skill="Matriz Pugh">Matriz Pugh</li>
-                        <li data-skill="FMEA">FMEA</li>
-                        <li data-skill="QFD">QFD</li>
-                        <li data-skill="BSC">BSC</li>
-                        <li data-skill="SWOT">SWOT</li>
-                        <li data-skill="Diagrama de Ishikawa">Diagrama de Ishikawa</li>
-                        <li data-skill="Brainstorming">Brainstorming</li>
+                        <li>Ferros Fundidos e Defeitos de Fundição</li>
+                        <li>Confiabilidade de Peças Plástico</li>
+                        <li>Caracterização e Reologia de Polímeros - Moldflow</li>
+                        <li>Forjamento</li>
+                        <li>Poka Yoke</li>
+                        <li>ISO TS 16949</li>
+                        <li>Auditor Interno ISO 14000</li>
+                        <li>Propriedade Industrial e Intelectual</li>
+                        <li>Leader Training - PNL</li>
+                        <li>Auditores de Sistema da Qualidade</li>
+                        <li>Custos Industriais</li>
+                        <li>Gerenciamento de Projetos</li>
+                        <li>GD&T</li>
+                        <li>Pesquisas de Mercado</li>
+                        <li>Kaizen</li>
+                        <li>LEAN</li>
+                        <li>JIT</li>
+                        <li>OEE</li>
+                        <li>5S</li>
+                        <li>5 Porquês</li>
+                        <li>Matriz Pugh</li>
+                        <li>FMEA</li>
+                        <li>QFD</li>
+                        <li>BSC</li>
+                        <li>SWOT</li>
+                        <li>Diagrama de Ishikawa</li>
+                        <li>Brainstorming</li>
                     </ul>
                 </div>
             </div>
@@ -626,7 +634,7 @@
 
     <!-- Rodapé -->
     <footer class="header-bg py-8 px-4 text-center text-sm rounded-t-lg">
-        <p>&copy; 2025 Kleber Silveira. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Markideng. Todos os direitos reservados.</p>
     </footer>
 
     <!-- Modal de Habilidades -->
@@ -659,13 +667,22 @@
 
         window.addEventListener('scroll', () => {
             let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 70; // Ajuste para o tamanho do cabeçalho fixo
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
+            const scrollY = window.pageYOffset;
+            const bodyHeight = document.body.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            // Verifica se está no final da página para ativar a última seção (Contato)
+            if ((windowHeight + scrollY) >= bodyHeight - 5) { // -5 para uma pequena margem de tolerância
+                current = sections[sections.length - 1].getAttribute('id'); // Ativa a última seção
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 70; // Ajuste para o cabeçalho fixo
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+            }
 
             navLinks.forEach(link => {
                 link.classList.remove('active');

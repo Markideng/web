@@ -6,6 +6,8 @@
     <title>Kleber Silveira - Engenheiro de Projetos</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Nova fonte Google Fonts para as imagens de fundo -->
+    <link href="https://fonts.googleapis.com/css2?family=Ballet&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -84,10 +86,8 @@
             box-shadow: 0 0 0 3px #4299e1; /* Sombra como contorno do ícone/botão */
         }
         .nav-link img {
-            height: 24px;
-            width: 24px;
             margin-bottom: 4px; /* Espaço entre o ícone e o texto */
-            /* Removido: border-radius: 9999px; */ /* Torna os ícones redondos */
+            /* As classes de tamanho do Tailwind agora controlam a altura e largura */
         }
         .nav-link .tooltip-text {
             position: absolute;
@@ -145,27 +145,27 @@
             color: #cbd5e0; /* Cinza claro para os itens da lista de cursos */
         }
 
-        /* Imagens de fundo para cada seção com mais contraste */
+        /* Imagens de fundo para cada seção com mais contraste e nova fonte/tamanho */
         #sobre {
-            background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre+Mim+-+Tecnologia'); /* Dark Teal */
+            background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre&font_size=70&font_family=Ballet'); /* Dark Teal */
         }
         #projetos {
-            background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos+-+Engenharia'); /* Deep Purple */
+            background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos&font_size=70&font_family=Ballet'); /* Deep Purple */
         }
         #experiencia {
-            background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiência+-+Profissional'); /* Dark Green */
+            background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiencias&font_size=70&font_family=Ballet'); /* Dark Green */
         }
         #habilidades {
-            background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Habilidades+-+Inovação'); /* Dark Red/Burgundy */
+            background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Conhecimentos&font_size=70&font_family=Ballet'); /* Dark Red/Burgundy */
         }
         #educacao {
-            background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educação+-+Conhecimento'); /* Dark Gold/Brown */
+            background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educacao&font_size=70&font_family=Ballet'); /* Dark Gold/Brown */
         }
         #cursos {
-            background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos+-+Treinamento'); /* Dark Grey/Blue */
+            background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos&font_size=70&font_family=Ballet'); /* Dark Grey/Blue */
         }
         #contato {
-            background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato+-+Conecte-se'); /* Dark Blue */
+            background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato&font_size=70&font_family=Ballet'); /* Dark Blue */
         }
 
         /* Estilos do Carrossel */
@@ -292,31 +292,31 @@
                 <!-- Itens do menu alinhados à direita -->
                 <div class="flex items-center">
                     <a href="#sobre" class="nav-link group" data-section="sobre">
-                        <img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim">
+                        <img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Sobre Mim</span>
                     </a>
                     <a href="#projetos" class="nav-link group ml-4" data-section="projetos">
-                        <img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos">
+                        <img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Projetos</span>
                     </a>
                     <a href="#experiencia" class="nav-link group ml-4" data-section="experiencia">
-                        <img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência">
+                        <img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Experiência</span>
                     </a>
                     <a href="#habilidades" class="nav-link group ml-4" data-section="habilidades">
-                        <img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades">
+                        <img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Habilidades</span>
                     </a>
                     <a href="#educacao" class="nav-link group ml-4" data-section="educacao">
-                        <img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação">
+                        <img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Educação</span>
                     </a>
                     <a href="#cursos" class="nav-link group ml-4" data-section="cursos">
-                        <img src="https://markideng.github.io/web/SiteMie%20Projetos.png" alt="Ícone Cursos">
+                        <img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Cursos" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Cursos</span>
                     </a>
                     <a href="#contato" class="nav-link group ml-4" data-section="contato">
-                        <img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato">
+                        <img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato" class="h-5 w-5 sm:h-6 sm:w-6">
                         <span class="tooltip-text">Contato</span>
                     </a>
                 </div>
@@ -524,7 +524,8 @@
                         <li data-skill="Lean Office">Lean Office</li>
                         <li>Ferros Fundidos e Defeitos de Fundição</li>
                         <li>Confiabilidade de Peças Plástico</li>
-                        <li>Caracterização e Reologia de Polímeros - Moldflow</li>
+                        <!-- Alterado o texto do item Moldflow -->
+                        <li data-skill="Reologia de Polímeros - Moldflow">Reologia de Polímeros - Moldflow</li>
                         <li>Forjamento</li>
                         <li>Poka Yoke</li>
                         <li>ISO TS 16949</li>
@@ -575,7 +576,7 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold">Técnico em Mecânica</h3>
-                    <p class="text-gray-200">CIS - Dario Geraldo Salles - 1991 a 1995</p>
+                    <p class="text-200">CIS - Dario Geraldo Salles - 1991 a 1995</p>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@
             background-color: #f8f8f8; /* Fundo cinza claro */
             color: #333;
             padding-top: 64px; /* Espaço para o menu fixo */
+            overflow-x: hidden; /* Previne scroll horizontal causado por margens negativas */
         }
         .header-bg {
             background-color: #1a202c; /* Fundo mais escuro para o cabeçalho */
@@ -34,22 +35,7 @@
         .project-card:hover {
             transform: translateY(-5px);
         }
-        .btn-primary {
-            background-color: #4299e1; /* Botão azul */
-            color: #fff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: #3182ce; /* Azul mais escuro ao passar o mouse */
-        }
-        .contact-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
+        
         /* Estilos para o menu de navegação */
         .navbar {
             background-color: #1a202c; /* Fundo do menu */
@@ -87,7 +73,6 @@
         }
         .nav-link img {
             margin-bottom: 4px; /* Espaço entre o ícone e o texto */
-            /* As classes de tamanho do Tailwind agora controlam a altura e largura */
         }
         .nav-link .tooltip-text {
             position: absolute;
@@ -135,150 +120,126 @@
             color: #fff; /* Títulos brancos sobre o fundo escuro */
             border-color: #cbd5e0; /* Borda clara */
         }
-        /* Cores de texto específicas para seções com fundo claro */
-        #projetos .project-card,
-        #habilidades .grid > div {
-            color: #333; /* Mantém a cor escura para o conteúdo dentro dos cards */
+        
+        /* Imagens de fundo para cada seção */
+        #sobre { background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre&font_size=33&font=Playfair%20Display'); }
+        #projetos { background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos&font_size=33&font=Playfair%20Display'); }
+        #experiencia { background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiencias&font_size=33&font=Playfair%20Display'); }
+        #habilidades { background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Conhecimentos&font_size=33&font=Playfair%20Display'); }
+        #educacao { background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educacao&font_size=33&font=Playfair%20Display'); }
+        #cursos { background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos&font_size=33&font=Playfair%20Display'); }
+        #contato { background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato&font_size=33&font=Playfair%20Display'); }
+
+        /* Imagem sextavada na seção Sobre */
+        .hexagon-container {
+            flex-shrink: 0; /* Impede que a imagem encolha */
         }
-        /* Ajuste para a cor do texto na seção de cursos */
-        #cursos ul li {
-            color: #cbd5e0; /* Cinza claro para os itens da lista de cursos */
+        .hexagon-image {
+            width: 100px; /* Aproximadamente 10mm */
+            height: 100px; /* Proporção 1:1 para garantir sextavado equilátero */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: transform 0.3s ease-in-out;
+            object-fit: cover;
+        }
+        .hexagon-image:hover {
+            transform: scale(3); /* Aumenta o tamanho em 3x para simular 30mm */
         }
 
-        /* Imagens de fundo para cada seção com mais contraste e nova fonte/tamanho */
-        #sobre {
-            background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre&font_size=33&font=Playfair%20Display'); /* Dark Teal */
-        }
-        #projetos {
-            background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos&font_size=33&font=Playfair%20Display'); /* Deep Purple */
-        }
-        #experiencia {
-            background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiencias&font_size=33&font=Playfair%20Display'); /* Dark Green */
-        }
-        #habilidades {
-            background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Conhecimentos&font_size=33&font=Playfair%20Display'); /* Dark Red/Burgundy */
-        }
-        #educacao {
-            background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educacao&font_size=33&font=Playfair%20Display'); /* Dark Gold/Brown */
-        }
-        #cursos {
-            background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos&font_size=33&font=Playfair%20Display'); /* Dark Grey/Blue */
-        }
-        #contato {
-            background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato&font_size=33&font=Playfair%20Display'); /* Dark Blue */
-        }
-
-        /* Estilos do Carrossel */
+        /* Estilos do Carrossel Principal */
         .carousel-container {
             position: relative;
             width: 100%;
-            max-width: 600px; /* Ajuste conforme necessário */
             margin: 0 auto;
             overflow: hidden;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .carousel-image {
-            width: 100%;
-            display: none; /* Esconde todas as imagens por padrão */
+        .carousel-image { display: none; width: 100%; border-radius: 0.5rem; }
+        .carousel-image.active { display: block; }
+        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; z-index: 10; border-radius: 0.25rem; }
+        .carousel-button.prev { left: 10px; }
+        .carousel-button.next { right: 10px; }
+        .carousel-dots { text-align: center; margin-top: 1rem; }
+        .dot { height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin: 0 5px; cursor: pointer; }
+        .dot.active { background-color: #717171; }
+
+        /* Estilos dos Carrosséis de Logos */
+        .logo-carousel-container {
+            overflow: hidden;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .carousel-image.active {
-            display: block; /* Mostra a imagem ativa */
+        .logo-carousel-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            z-index: 10;
-            border-radius: 0.25rem;
+        .logo-carousel-container:hover .logos-track {
+            animation-play-state: paused;
         }
-        .carousel-button.prev {
-            left: 10px;
+        
+        /* Carrossel Vertical */
+        .logo-carousel-vertical .logos-track {
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 20s linear infinite;
         }
-        .carousel-button.next {
-            right: 10px;
+        .logo-carousel-vertical .logo-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            margin-bottom: 1rem;
         }
-        .carousel-dots {
-            text-align: center;
-            margin-top: 1rem;
+        @keyframes slideUp {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
         }
-        .dot {
-            height: 10px;
-            width: 10px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 5px;
-            cursor: pointer;
+
+        /* Carrossel Horizontal */
+        .logo-carousel-horizontal { height: 120px; display: flex; align-items: center;}
+        .logo-carousel-horizontal .logos-track {
+            display: flex;
+            animation: slideRight 25s linear infinite;
         }
-        .dot.active {
-            background-color: #717171;
+        .logo-carousel-horizontal .logo-item {
+            flex-shrink: 0;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+        }
+        @keyframes slideRight {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .logo-carousel-container img {
+            max-height: 60px;
+            max-width: 120px;
+            width: auto;
+            height: auto;
+            filter: grayscale(100%);
+            opacity: 0.8;
+            transition: filter 0.3s, opacity 0.3s;
+        }
+        .logo-carousel-container:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
         }
 
         /* Estilos do Modal de Habilidades */
-        .skill-modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-        .skill-modal-backdrop.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .skill-modal-content {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            color: #333;
-        }
-        .skill-modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-        }
-        .skill-modal-loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100px;
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #4299e1;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .skill-modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+        .skill-modal-backdrop.show { opacity: 1; visibility: visible; }
+        .skill-modal-content { background-color: #fff; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; position: relative; color: #333; }
+        .skill-modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; }
+        .skill-modal-loading { display: flex; justify-content: center; align-items: center; min-height: 100px; }
+        .spinner { border: 4px solid rgba(0, 0, 0, 0.1); border-top: 4px solid #4299e1; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="antialiased">
@@ -286,39 +247,15 @@
     <nav class="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <!-- Logo Kleber Silveira no canto superior esquerdo -->
                 <img src="https://markideng.github.io/web/MIELogoBR%20K2.png" alt="Logo Kleber Silveira" class="h-full w-auto shadow-md">
-
-                <!-- Itens do menu alinhados à direita -->
                 <div class="flex items-center">
-                    <a href="#sobre" class="nav-link group" data-section="sobre">
-                        <img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Sobre Mim</span>
-                    </a>
-                    <a href="#projetos" class="nav-link group ml-4" data-section="projetos">
-                        <img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Projetos</span>
-                    </a>
-                    <a href="#experiencia" class="nav-link group ml-4" data-section="experiencia">
-                        <img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Experiência</span>
-                    </a>
-                    <a href="#habilidades" class="nav-link group ml-4" data-section="habilidades">
-                        <img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Habilidades</span>
-                    </a>
-                    <a href="#educacao" class="nav-link group ml-4" data-section="educacao">
-                        <img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Educação</span>
-                    </a>
-                    <a href="#cursos" class="nav-link group ml-4" data-section="cursos">
-                        <img src="https://markideng.github.io/web/SiteMie%20Projetos.png" alt="Ícone Cursos" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Cursos</span>
-                    </a>
-                    <a href="#contato" class="nav-link group ml-4" data-section="contato">
-                        <img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato" class="h-5 w-5 sm:h-6 sm:w-6">
-                        <span class="tooltip-text">Contato</span>
-                    </a>
+                    <a href="#sobre" class="nav-link group" data-section="sobre"><img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Sobre Mim</span></a>
+                    <a href="#projetos" class="nav-link group ml-4" data-section="projetos"><img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Projetos</span></a>
+                    <a href="#experiencia" class="nav-link group ml-4" data-section="experiencia"><img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Experiência</span></a>
+                    <a href="#habilidades" class="nav-link group ml-4" data-section="habilidades"><img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Habilidades</span></a>
+                    <a href="#educacao" class="nav-link group ml-4" data-section="educacao"><img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Educação</span></a>
+                    <a href="#cursos" class="nav-link group ml-4" data-section="cursos"><img src="https://markideng.github.io/web/SiteMie%20Projetos.png" alt="Ícone Cursos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Cursos</span></a>
+                    <a href="#contato" class="nav-link group ml-4" data-section="contato"><img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Contato</span></a>
                 </div>
             </div>
         </div>
@@ -337,65 +274,43 @@
         <div class="overlay"></div>
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Sobre Mim</h2>
-            <p class="text-lg leading-relaxed mb-4">
-                Atuo como Engenheiro com paixão por projetos de produto e processo, sempre buscando a geração de valor, inovação e a melhoria contínua. Minha experiência abrange desde o Desenho Industrial até a Engenharia de Produção, com foco em gestão e otimização.
-            </p>
-            <p class="text-lg leading-relaxed">
-                Minha trajetória profissional é marcada pela liderança de projetos, implantação de culturas de melhoria como Lean, validação técnica de novos produtos e processos, e otimização de custos e indicadores de desempenho. Sou um profissional proativo, com forte habilidade em trabalho em equipe e resolução de problemas.
-            </p>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="text-lg leading-relaxed">
+                    <p class="mb-4">
+                        Atuo como Engenheiro com paixão por projetos de produto e processo, sempre buscando a geração de valor, inovação e a melhoria contínua. Minha experiência abrange desde o Desenho Industrial até a Engenharia de Produção, com foco em gestão e otimização.
+                    </p>
+                    <p>
+                        Minha trajetória profissional é marcada pela liderança de projetos, implantação de culturas de melhoria como Lean, validação técnica de novos produtos e processos, e otimização de custos e indicadores de desempenho. Sou um profissional proativo, com forte habilidade em trabalho em equipe e resolução de problemas.
+                    </p>
+                </div>
+                <div class="hexagon-container">
+                    <img src="https://markideng.github.io/web/KNFTSideDK2mini.jpg" alt="Kleber Silveira" class="hexagon-image">
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Seção de Projetos em Destaque -->
     <section id="projetos" class="py-16 px-4 section-with-bg">
         <div class="overlay"></div>
-        <div class="max-w-4xl mx-auto content">
+        <div class="max-w-7xl mx-auto content px-4">
             <h2 class="text-3xl font-semibold section-heading">Projetos de Destaque</h2>
-            <div class="grid grid-cols-1 gap-8">
-                <!-- Projeto 1: Manutenção de Respiradores COVID-19 com Carrossel -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Card de Texto do Projeto -->
                 <div class="project-card p-6 rounded-lg">
                     <h3 class="text-xl font-bold mb-2">Manutenção de Respiradores Hospitalares COVID-19</h3>
                     <p class="text-gray-700 mb-4">
                         Recuperação voluntária e gratuita de mais de 50 equipamentos para hospitais de Santa Catarina, em cooperação com grandes empresas como BMW, GM, Whirlpool, Nidec e outras.
                     </p>
-                    <p class="text-gray-600 text-sm">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <strong>Meu Papel:</strong> Liderança e execução da manutenção, coordenação com parceiros.
-                    </p>
-                    <p class="text-600 text-sm">
-                        <strong>Resultados:</strong> +50 equipamentos recuperados, impacto direto na capacidade de atendimento hospitalar durante a pandemia.
-                    </p>
+                    <p class="text-gray-600 text-sm"><strong>Meu Papel:</strong> Liderança e execução da manutenção, coordenação com parceiros.</p>
+                    <p class="text-gray-600 text-sm"><strong>Resultados:</strong> +50 equipamentos recuperados, impacto direto na capacidade de atendimento hospitalar durante a pandemia.</p>
+                </div>
 
-                    <!-- Carrossel de Imagens -->
-                    <div class="carousel-container mt-4">
-                        <img class="carousel-image active" src="https://markideng.github.io/web/Corona1.jpg" alt="Imagem de Respirador Médico 1">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona2.png" alt="Imagem de Respirador Médico 2">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona3.jpg" alt="Imagem de Respirador Médico 3">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona4.jpg" alt="Imagem de Respirador Médico 4">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona5.jpg" alt="Imagem de Respirador Médico 5">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona6.jpg" alt="Imagem de Respirador Médico 6">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona7.jpeg" alt="Imagem de Respirador Médico 7">
-                        <img class="carousel-image" src="https://markideng.github.io/web/Corona8.jpg" alt="Imagem de Respirador Médico 8">
-                        <button class="carousel-button prev">&#10094;</button>
-                        <button class="carousel-button next">&#10095;</button>
-                        <div class="carousel-dots">
-                            <span class="dot active" data-index="0"></span>
-                            <span class="dot" data-index="1"></span>
-                            <span class="dot" data-index="2"></span>
-                            <span class="dot" data-index="3"></span>
-                            <span class="dot" data-index="4"></span>
-                            <span class="dot" data-index="5"></span>
-                            <span class="dot" data-index="6"></span>
-                            <span class="dot" data-index="7"></span>
-                        </div>
-                    </div>
+                <!-- Card do Carrossel de Imagens -->
+                <div class="carousel-container">
+                    <img class="carousel-image active" src="https://markideng.github.io/web/Corona1.jpg" alt="Imagem de Respirador Médico 1"><img class="carousel-image" src="https://markideng.github.io/web/Corona2.png" alt="Imagem de Respirador Médico 2"><img class="carousel-image" src="https://markideng.github.io/web/Corona3.jpg" alt="Imagem de Respirador Médico 3"><img class="carousel-image" src="https://markideng.github.io/web/Corona4.jpg" alt="Imagem de Respirador Médico 4"><img class="carousel-image" src="https://markideng.github.io/web/Corona5.jpg" alt="Imagem de Respirador Médico 5"><img class="carousel-image" src="https://markideng.github.io/web/Corona6.jpg" alt="Imagem de Respirador Médico 6"><img class="carousel-image" src="https://markideng.github.io/web/Corona7.jpeg" alt="Imagem de Respirador Médico 7"><img class="carousel-image" src="https://markideng.github.io/web/Corona8.jpg" alt="Imagem de Respirador Médico 8">
+                    <button class="carousel-button prev">&#10094;</button><button class="carousel-button next">&#10095;</button>
+                    <div class="carousel-dots"><span class="dot active" data-index="0"></span><span class="dot" data-index="1"></span><span class="dot" data-index="2"></span><span class="dot" data-index="3"></span><span class="dot" data-index="4"></span><span class="dot" data-index="5"></span><span class="dot" data-index="6"></span><span class="dot" data-index="7"></span></div>
                 </div>
             </div>
         </div>
@@ -404,85 +319,76 @@
     <!-- Seção de Experiência Profissional -->
     <section id="experiencia" class="py-16 px-4 section-with-bg">
         <div class="overlay"></div>
-        <div class="max-w-4xl mx-auto content">
+        <div class="max-w-7xl mx-auto content px-4">
             <h2 class="text-3xl font-semibold section-heading">Experiência Profissional por Área</h2>
 
             <!-- Experiências de Gestão -->
             <h3 class="text-2xl font-bold mb-4 text-white">Gestão</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <div class="project-card p-6 rounded-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 items-center">
+                <div class="project-card p-6 rounded-lg" id="kl-card">
                     <h4 class="text-xl font-bold mb-2">K&L Metrologia - Gerente de Marketing e Comercial</h4>
                     <p class="text-gray-700 text-sm mb-2">(Ago/2023 - Jan/2024)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Planejamento estratégico</li>
-                        <li>Prospecção e Promoção web e redes sociais</li>
-                        <li>Gestão de pessoas.</li>
-                    </ul>
+                    <ul class="list-disc list-inside text-gray-600 text-sm"><li>Planejamento estratégico</li><li>Prospecção e Promoção web e redes sociais</li><li>Gestão de pessoas.</li></ul>
+                </div>
+                <div class="logo-carousel-container logo-carousel-vertical" id="vertical-carousel">
+                    <div class="logos-track">
+                        <div class="logo-item"><img src="https://markideng.github.io/web/KaVoLogo.png" alt="KaVo"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/WhirlpoolLogo.png" alt="Whirlpool"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/EmbracoLogo.png" alt="Embraco"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/TecnofibrasLogo.png" alt="Busscar"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SOCIESCLogo.jpg" alt="Sociesc"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SenaiLogo.png" alt="Senai"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/KaVoLogo.png" alt="KaVo"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/WhirlpoolLogo.png" alt="Whirlpool"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/EmbracoLogo.svg" alt="Embraco"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/TecnofibrasLogo.png" alt="Busscar"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SOCIESCLogo.jpg" alt="Sociesc"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SenaiLogo.png" alt="Senai"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Experiências de Projetos -->
             <h3 class="text-2xl font-bold mb-4 text-white">Projetos</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Gestão de projetos e Capex de projeto</li>
-                    </ul>
-                </div>
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">Tecnofibras - Projetista de Produtos</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Jan/2009 - Set/2010)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Viabilidade técnica de peças automobilísticas</li>
-                        <li>Levantamento de custos e orçamento</li>
-                        <li>Propostas, visitas apresentações comerciais.</li>
-                    </ul>
-                </div>
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Projetista de Produtos</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Mai/2004 – Mar/2008)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Desenvolver projetos de novos produtos</li>
-                        <li>Implantação de projetos redução de custo.</li>
-                    </ul>
-                </div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4><p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Gestão de projetos e Capex de projeto</li></ul></div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">Tecnofibras - Projetista de Produtos</h4><p class="text-gray-700 text-sm mb-2">(Jan/2009 - Set/2010)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Viabilidade técnica de peças automobilísticas</li><li>Levantamento de custos e orçamento</li><li>Propostas, visitas apresentações comerciais.</li></ul></div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">WHIRLPOOL - Projetista de Produtos</h4><p class="text-gray-700 text-sm mb-2">(Mai/2004 – Mar/2008)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Desenvolver projetos de novos produtos</li><li>Implantação de projetos redução de custo.</li></ul></div>
             </div>
 
             <!-- Experiências de Processo -->
             <h3 class="text-2xl font-bold mb-4 text-white">Processo</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Validação técnica novos produtos e processos.</li>
-                    </ul>
-                </div>
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">FIESC SENAI - Consultor Empresarial</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Abr/2017 - Mai/2022)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Implantação de Cultura Lean</li>
-                        <li>Mapeamento de processo (BPM, MFV, BI)</li>
-                        <li>Simulação de processo (Gargalos - Flexsim).</li>
-                    </ul>
-                </div>
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">SOCIESC - Consultor Empresarial</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Ago/2012 - Jan/2016)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Simulação de peças injetadas em polímeros.</li>
-                    </ul>
-                </div>
-                <div class="project-card p-6 rounded-lg">
-                    <h4 class="text-xl font-bold mb-2">EMBRACO - Especialista de Processos</h4>
-                    <p class="text-gray-700 text-sm mb-2">(Set/2010 – Jan/2012)</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm">
-                        <li>Validação de novos produtos na fabricação</li>
-                        <li>Melhorar o indicador de OEE e equipes.</li>
-                    </ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                 <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">WHIRLPOOL - Líder de Projetos EPI e Montagem (Industrial)</h4><p class="text-gray-700 text-sm mb-2">(Fev/2024 - Atual)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Validação técnica novos produtos e processos.</li></ul></div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">FIESC SENAI - Consultor Empresarial</h4><p class="text-gray-700 text-sm mb-2">(Abr/2017 - Mai/2022)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Implantação de Cultura Lean</li><li>Mapeamento de processo (BPM, MFV, BI)</li><li>Simulação de processo (Gargalos - Flexsim).</li></ul></div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">SOCIESC - Consultor Empresarial</h4><p class="text-gray-700 text-sm mb-2">(Ago/2012 - Jan/2016)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Simulação de peças injetadas em polímeros.</li></ul></div>
+                <div class="project-card p-6 rounded-lg"><h4 class="text-xl font-bold mb-2">EMBRACO - Especialista de Processos</h4><p class="text-gray-700 text-sm mb-2">(Set/2010 – Jan/2012)</p><ul class="list-disc list-inside text-gray-600 text-sm"><li>Validação de novos produtos na fabricação</li><li>Melhorar o indicador de OEE e equipes.</li></ul></div>
+                <div class="logo-carousel-container logo-carousel-horizontal col-span-1 md:col-span-2 lg:col-span-3 -mx-4">
+                    <div class="logos-track">
+                        <div class="logo-item"><img src="https://markideng.github.io/web/BRFLogo.png" alt="BRF"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/HidroLogo.png" alt="HidroAlcoa"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FibrafortLogo.jpg" alt="Fibrafort"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/PortoItajaiLogo.jpg" alt="Porto Itajai"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/RiosulenseLogo.webp" alt="Riosulense"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FeyLogo.png" alt="Fey"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/KoviLogo.png" alt="Kovi"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/TuperLogo.png" alt="Tuper"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/MinusaLogo.png" alt="Minusa"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/CSMLogo.webp" alt="CSM"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/KohmarLogo.png" alt="Kohmar"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FundipressLogo.jpeg" alt="Fundipress"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SenaiLogo.png" alt="Senai"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/HybelLogo.png" alt="Hybel"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/TritonLogo.jpeg" alt="Triton"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/Menegotti Logo.png" alt="Menegotti"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/2RiosLogo.png" alt="2Rios"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/AfribLogo.png" alt="Afrb"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/AcquamiresLogo.png" alt="Acquamires"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/FrigolasteLogo.jpg" alt="Frigolaste"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/rohden_queimadores_logo.jpeg" alt="Rohden"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -494,64 +400,9 @@
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Habilidades e Ferramentas</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
-                    <h3 class="text-xl font-bold mb-2 text-white">Idiomas</h3>
-                    <ul class="list-disc list-inside text-gray-200">
-                        <li data-skill="Inglês Avançado">Inglês (Avançado)</li>
-                        <li data-skill="Espanhol Intermediário">Espanhol (Intermediário)</li>
-                    </ul>
-                </div>
-                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
-                    <h3 class="text-xl font-bold mb-2 text-white">Ferramentas e Software</h3>
-                    <ul class="list-disc list-inside text-gray-200">
-                        <li data-skill="Power BI">Power BI</li>
-                        <li data-skill="Datastudio">Datastudio</li>
-                        <li data-skill="Flexsim">Flexsim</li>
-                        <li data-skill="Moldflow">Moldflow</li>
-                        <li data-skill="CREO (PRO-E)">CREO (PRO-E)</li>
-                        <li data-skill="NX">NX</li>
-                        <li data-skill="Catia">Catia</li>
-                        <li data-skill="SAP">SAP</li>
-                        <li data-skill="MS Project">MS Project</li>
-                        <li data-skill="Microsoft Office">Microsoft Office</li>
-                        <li data-skill="Google Tools">Google.</li>
-                    </ul>
-                </div>
-                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
-                    <h3 class="text-xl font-bold mb-2 text-white">Metodologias e Conceitos</h3>
-                    <ul class="list-disc list-inside text-gray-200">
-                        <li data-skill="Green Belt Six Sigma">Green Belt Six Sigma</li>
-                        <li data-skill="Lean Office">Lean Office</li>
-                        <li>Ferros Fundidos e Defeitos de Fundição</li>
-                        <li>Confiabilidade de Peças Plástico</li>
-                        <!-- Alterado o texto do item Moldflow -->
-                        <li data-skill="Reologia de Polímeros - Moldflow">Reologia de Polímeros - Moldflow</li>
-                        <li>Forjamento</li>
-                        <li>Poka Yoke</li>
-                        <li>ISO TS 16949</li>
-                        <li>Auditor Interno ISO 14000</li>
-                        <li>Propriedade Industrial e Intelectual</li>
-                        <li>Leader Training - PNL</li>
-                        <li>Auditores de Sistema da Qualidade</li>
-                        <li>Custos Industriais</li>
-                        <li>Gerenciamento de Projetos</li>
-                        <li>GD&T</li>
-                        <li>Pesquisas de Mercado</li>
-                        <li>Kaizen</li>
-                        <li>LEAN</li>
-                        <li>JIT</li>
-                        <li>OEE</li>
-                        <li>5S</li>
-                        <li>5 Porquês</li>
-                        <li>Matriz Pugh</li>
-                        <li>FMEA</li>
-                        <li>QFD</li>
-                        <li>BSC</li>
-                        <li>SWOT</li>
-                        <li>Diagrama de Ishikawa</li>
-                        <li>Brainstorming</li>
-                    </ul>
-                </div>
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"><h3 class="text-xl font-bold mb-2 text-white">Idiomas</h3><ul class="list-disc list-inside text-gray-200"><li data-skill="Inglês Avançado">Inglês (Avançado)</li><li data-skill="Espanhol Intermediário">Espanhol (Intermediário)</li></ul></div>
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"><h3 class="text-xl font-bold mb-2 text-white">Ferramentas e Software</h3><ul class="list-disc list-inside text-gray-200"><li data-skill="Power BI">Power BI</li> <li data-skill="Datastudio">Datastudio</li> <li data-skill="Flexsim">Flexsim</li> <li data-skill="Moldflow">Moldflow</li> <li data-skill="CREO (PRO-E)">CREO (PRO-E)</li> <li data-skill="NX">NX</li> <li data-skill="Catia">Catia</li> <li data-skill="SAP">SAP</li> <li data-skill="MS Project">MS Project</li> <li data-skill="Microsoft Office">Microsoft Office</li> <li data-skill="Google Tools">Google.</li></ul></div>
+                <div class="skill-item cursor-pointer p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"><h3 class="text-xl font-bold mb-2 text-white">Metodologias e Conceitos</h3><ul class="list-disc list-inside text-gray-200"><li data-skill="Green Belt Six Sigma">Green Belt Six Sigma</li> <li data-skill="Lean Office">Lean Office</li> <li>Ferros Fundidos e Defeitos de Fundição</li> <li>Confiabilidade de Peças Plástico</li> <li data-skill="Reologia de Polímeros - Moldflow">Reologia de Polímeros - Moldflow</li> <li>Forjamento</li> <li>Poka Yoke</li> <li>ISO TS 16949</li> <li>Auditor Interno ISO 14000</li> <li>Propriedade Industrial e Intelectual</li> <li>Leader Training - PNL</li> <li>Auditores de Sistema da Qualidade</li> <li>Custos Industriais</li> <li>Gerenciamento de Projetos</li> <li>GD&T</li> <li>Pesquisas de Mercado</li> <li>Kaizen</li> <li>LEAN</li> <li>JIT</li> <li>OEE</li> <li>5S</li> <li>5 Porquês</li> <li>Matriz Pugh</li> <li>FMEA</li> <li>QFD</li> <li>BSC</li> <li>SWOT</li> <li>Diagrama de Ishikawa</li> <li>Brainstorming</li></ul></div>
             </div>
         </div>
     </section>
@@ -562,22 +413,10 @@
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Educação</h2>
             <div class="space-y-6">
-                <div>
-                    <h3 class="text-xl font-bold">Pós-Graduação em Marketing</h3>
-                    <p class="text-gray-200">Faculdade Cenecista Joinville (FCJ) - 2005 a 2006</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold">Graduação em Engenharia de Produção</h3>
-                    <p class="text-gray-200">UNISociesc – TUPY - 2010 a 2013</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold">Graduação em Desenho Industrial (Projeto de Produtos)</h3>
-                    <p class="text-gray-200">UTESC - 1999 a 2004</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold">Técnico em Mecânica</h3>
-                    <p class="text-200">CIS - Dario Geraldo Salles - 1991 a 1995</p>
-                </div>
+                <div><h3 class="text-xl font-bold">Pós-Graduação em Marketing</h3><p class="text-gray-200">Faculdade Cenecista Joinville (FCJ) - 2005 a 2006</p></div>
+                <div><h3 class="text-xl font-bold">Graduação em Engenharia de Produção</h3><p class="text-gray-200">UNISociesc – TUPY - 2010 a 2013</p></div>
+                <div><h3 class="text-xl font-bold">Graduação em Desenho Industrial (Projeto de Produtos)</h3><p class="text-gray-200">UTESC - 1999 a 2004</p></div>
+                <div><h3 class="text-xl font-bold">Técnico em Mecânica</h3><p class="text-gray-200">CIS - Dario Geraldo Salles - 1991 a 1995</p></div>
             </div>
         </div>
     </section>
@@ -587,22 +426,8 @@
         <div class="overlay"></div>
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Cursos e Treinamentos</h2>
-            <ul class="list-disc list-inside">
-                <li>Green Belt Six Sigma</li>
-                <li>Lean Office</li>
-                <li>Ferros Fundidos e Defeitos de Fundição</li>
-                <li>Confiabilidade de Peças Plástico</li>
-                <li>Caracterização e Reologia de Polímeros - Moldflow</li>
-                <li>Forjamento</li>
-                <li>Poka Yoke</li>
-                <li>ISO TS 16949</li>
-                <li>Auditor Interno ISO 14000</li>
-                <li>Propriedade Industrial e Intelectual</li>
-                <li>Leader Training - PNL</li>
-                <li>Auditores de Sistema da Qualidade</li>
-                <li>Custos Industriais</li>
-                <li>Gerenciamento de Projetos</li>
-                <li>GD&T</li>
+            <ul class="list-disc list-inside text-gray-200">
+                <li>Green Belt Six Sigma</li> <li>Lean Office</li> <li>Ferros Fundidos e Defeitos de Fundição</li> <li>Confiabilidade de Peças Plástico</li> <li>Caracterização e Reologia de Polímeros - Moldflow</li> <li>Forjamento</li> <li>Poka Yoke</li> <li>ISO TS 16949</li> <li>Auditor Interno ISO 14000</li> <li>Propriedade Industrial e Intelectual</li> <li>Leader Training - PNL</li> <li>Auditores de Sistema da Qualidade</li> <li>Custos Industriais</li> <li>Gerenciamento de Projetos</li> <li>GD&T</li>
             </ul>
         </div>
     </section>
@@ -614,21 +439,11 @@
             <h2 class="text-3xl font-semibold section-heading">Contato</h2>
             <p class="text-lg mb-4">Fique à vontade para entrar em contato:</p>
             <div class="space-y-4">
-                <p class="text-lg">
-                    WhatsApp: <a href="tel:+5547999415177" class="text-blue-300 hover:underline">+55 (47) 999415177</a>
-                </p>
-                <p class="text-lg">
-                    <a href="mailto:kleber@markideng.com" class="text-blue-300 hover:underline">kleber@markideng.com</a>
-                </p>
-                <p class="text-lg">
-                    <a href="https://www.markideng.com" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">www.markideng.com</a>
-                </p>
-                <p class="text-lg">
-                    <a href="https://linkedin.com/in/markideng/" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">linkedin.com/in/markideng/</a>
-                </p>
-                <p class="text-lg">
-                    Rua Prudente de Moraes, 613 – Joinville – SC.
-                </p>
+                <p class="text-lg">WhatsApp: <a href="tel:+5547999415177" class="text-blue-300 hover:underline">+55 (47) 999415177</a></p>
+                <p class="text-lg"><a href="mailto:kleber@markideng.com" class="text-blue-300 hover:underline">kleber@markideng.com</a></p>
+                <p class="text-lg"><a href="https://www.markideng.com" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">www.markideng.com</a></p>
+                <p class="text-lg"><a href="https://linkedin.com/in/markideng/" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">linkedin.com/in/markideng/</a></p>
+                <p class="text-lg">Rua Prudente de Moraes, 613 – Joinville – SC.</p>
             </div>
         </div>
     </section>
@@ -643,43 +458,50 @@
         <div class="skill-modal-content">
             <button id="skillModalClose" class="skill-modal-close">&times;</button>
             <h3 id="skillModalTitle" class="text-2xl font-bold mb-4"></h3>
-            <div id="skillModalLoading" class="skill-modal-loading">
-                <div class="spinner"></div>
-            </div>
+            <div id="skillModalLoading" class="skill-modal-loading"><div class="spinner"></div></div>
             <p id="skillModalDescription" class="text-gray-700"></p>
         </div>
     </div>
 
     <script>
-        // JavaScript para rolagem suave e destaque do menu
+        // Função para ajustar o tamanho do carrossel vertical
+        function adjustCarouselSize() {
+            const klCard = document.getElementById('kl-card');
+            const verticalCarousel = document.getElementById('vertical-carousel');
+            if (klCard && verticalCarousel) {
+                const cardHeight = klCard.offsetHeight;
+                const cardWidth = klCard.offsetWidth;
+                verticalCarousel.style.height = `${cardHeight}px`;
+                verticalCarousel.style.width = `${cardWidth}px`;
+            }
+        }
+
+        // Ajustar no carregamento da página e no redimensionamento da janela
+        window.addEventListener('load', adjustCarouselSize);
+        window.addEventListener('resize', adjustCarouselSize);
+
+        // Rolagem suave e destaque do menu
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Função para destacar o item do menu conforme a rolagem
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
-
         window.addEventListener('scroll', () => {
             let current = '';
             const scrollY = window.pageYOffset;
             const bodyHeight = document.body.offsetHeight;
             const windowHeight = window.innerHeight;
 
-            // Verifica se está no final da página para ativar a última seção (Contato)
-            if ((windowHeight + scrollY) >= bodyHeight - 5) { // -5 para uma pequena margem de tolerância
-                current = sections[sections.length - 1].getAttribute('id'); // Ativa a última seção
+            if ((windowHeight + scrollY) >= bodyHeight - 5) {
+                current = sections[sections.length - 1].getAttribute('id');
             } else {
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 70; // Ajuste para o cabeçalho fixo
-                    const sectionHeight = section.clientHeight;
-                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    const sectionTop = section.offsetTop - 70;
+                    if (scrollY >= sectionTop) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -692,77 +514,74 @@
                 }
             });
         });
-
-        // Adiciona a classe 'active' ao primeiro item do menu ao carregar a página
         window.addEventListener('load', () => {
-            const firstSectionId = sections[0].getAttribute('id');
-            const firstNavLink = document.querySelector(`.nav-link[data-section="${firstSectionId}"]`);
-            if (firstNavLink) {
-                firstNavLink.classList.add('active');
+            if (navLinks.length > 0) navLinks[0].classList.add('active');
+        });
+
+        // Lógica do Carrossel Principal
+        const carousels = document.querySelectorAll('.carousel-container');
+        carousels.forEach(carousel => {
+            const images = carousel.querySelectorAll('.carousel-image');
+            const prevButton = carousel.querySelector('.carousel-button.prev');
+            const nextButton = carousel.querySelector('.carousel-button.next');
+            const dots = carousel.querySelectorAll('.dot');
+            let currentIndex = 0;
+            let interval;
+
+            function showImage(index) {
+                if(images.length === 0) return;
+                images.forEach((img) => img.classList.remove('active'));
+                dots.forEach((dot) => dot.classList.remove('active'));
+                images[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+
+            function nextImage() {
+                if(images.length === 0) return;
+                currentIndex = (currentIndex + 1) % images.length;
+                showImage(currentIndex);
+            }
+
+            function startCarousel() {
+                stopCarousel(); // Garante que não haja múltiplos intervalos
+                interval = setInterval(nextImage, 3000);
+            }
+
+            function stopCarousel() {
+                clearInterval(interval);
+            }
+
+            if(prevButton && nextButton){
+                prevButton.addEventListener('click', () => {
+                    stopCarousel();
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    showImage(currentIndex);
+                    startCarousel();
+                });
+
+                nextButton.addEventListener('click', () => {
+                    stopCarousel();
+                    nextImage();
+                    startCarousel();
+                });
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    stopCarousel();
+                    currentIndex = parseInt(e.target.dataset.index);
+                    showImage(currentIndex);
+                    startCarousel();
+                });
+            });
+            
+            if(images.length > 0) {
+                showImage(currentIndex);
+                startCarousel();
             }
         });
 
-        // Lógica do Carrossel
-        const carouselImages = document.querySelectorAll('.carousel-image');
-        const prevButton = document.querySelector('.carousel-button.prev');
-        const nextButton = document.querySelector('.carousel-button.next');
-        const dots = document.querySelectorAll('.dot');
-        let currentImageIndex = 0;
-        let carouselInterval; // Variável para armazenar o ID do intervalo
-
-        function showImage(index) {
-            carouselImages.forEach((img, i) => {
-                img.classList.remove('active');
-                dots[i].classList.remove('active');
-            });
-            carouselImages[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-
-        function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
-            showImage(currentImageIndex);
-        }
-
-        function startCarousel() {
-            carouselInterval = setInterval(nextImage, 3000); // Muda a imagem a cada 3 segundos
-        }
-
-        function stopCarousel() {
-            clearInterval(carouselInterval);
-        }
-
-        prevButton.addEventListener('click', () => {
-            stopCarousel(); // Para a rotação automática ao interagir
-            currentImageIndex = (currentImageIndex - 1 + carouselImages.length) % carouselImages.length;
-            showImage(currentImageIndex);
-            startCarousel(); // Reinicia a rotação após a interação
-        });
-
-        nextButton.addEventListener('click', () => {
-            stopCarousel(); // Para a rotação automática ao interagir
-            currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
-            showImage(currentImageIndex);
-            startCarousel(); // Reinicia a rotação após a interação
-        });
-
-        dots.forEach(dot => {
-            dot.addEventListener('click', (e) => {
-                stopCarousel(); // Para a rotação automática ao interagir
-                const index = parseInt(e.target.dataset.index);
-                currentImageIndex = index;
-                showImage(currentImageIndex);
-                startCarousel(); // Reinicia a rotação após a interação
-            });
-        });
-
-        // Iniciar o carrossel automaticamente ao carregar a página
-        window.addEventListener('load', () => {
-            showImage(currentImageIndex); // Exibe a primeira imagem
-            startCarousel(); // Inicia a rotação
-        });
-
-        // Lógica do Modal de Habilidades com Gemini API
+        // Lógica do Modal de Habilidades
         const skillItems = document.querySelectorAll('#habilidades li[data-skill]');
         const skillModalBackdrop = document.getElementById('skillModalBackdrop');
         const skillModalClose = document.getElementById('skillModalClose');
@@ -774,30 +593,25 @@
             item.addEventListener('click', async () => {
                 const skillName = item.dataset.skill;
                 skillModalTitle.textContent = skillName;
-                skillModalDescription.textContent = ''; // Limpa a descrição anterior
-                skillModalLoading.style.display = 'flex'; // Mostra o spinner de carregamento
-                skillModalBackdrop.classList.add('show'); // Mostra o modal
+                skillModalDescription.textContent = '';
+                skillModalLoading.style.display = 'flex';
+                skillModalBackdrop.classList.add('show');
 
                 try {
-                    let chatHistory = [];
                     const prompt = `Explique o conceito de "${skillName}" de forma concisa e relevante para um contexto profissional.`;
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // A chave de API será fornecida pelo ambiente Canvas
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
+                    const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                    const apiKey = ""; // A chave de API será fornecida pelo ambiente
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                    
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-
                     const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        skillModalDescription.textContent = text;
+
+                    if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
+                        skillModalDescription.textContent = result.candidates[0].content.parts[0].text;
                     } else {
                         skillModalDescription.textContent = 'Não foi possível obter a explicação. Tente novamente.';
                     }
@@ -805,16 +619,14 @@
                     console.error('Erro ao chamar a API Gemini:', error);
                     skillModalDescription.textContent = 'Erro ao carregar a explicação. Verifique sua conexão ou tente mais tarde.';
                 } finally {
-                    skillModalLoading.style.display = 'none'; // Esconde o spinner de carregamento
+                    skillModalLoading.style.display = 'none';
                 }
             });
         });
 
         skillModalClose.addEventListener('click', () => {
-            skillModalBackdrop.classList.remove('show'); // Esconde o modal
+            skillModalBackdrop.classList.remove('show');
         });
-
-        // Fechar modal ao clicar fora dele
         skillModalBackdrop.addEventListener('click', (e) => {
             if (e.target === skillModalBackdrop) {
                 skillModalBackdrop.classList.remove('show');

@@ -235,6 +235,18 @@
             z-index: 10;
         }
 
+        /* Ajustes específicos para logos */
+        .logo-artico {
+            object-fit: contain; /* Garante que a imagem inteira apareça */
+            max-height: 70px; /* Aumenta um pouco a altura máxima para evitar cortes */
+        }
+
+        .logo-chantelle {
+            max-height: 75px; /* Aumenta a altura para melhor visibilidade */
+            width: auto;
+        }
+
+
         /* Estilos do Modal de Habilidades */
         .skill-modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
         .skill-modal-backdrop.show { opacity: 1; visibility: visible; }
@@ -250,7 +262,9 @@
     <nav class="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <img src="https://markideng.github.io/web/MIELogoBR%20K2.png" alt="Logo Kleber Silveira" class="h-full w-auto shadow-md">
+                <a href="#" id="home-logo-link">
+                    <img src="https://markideng.github.io/web/MIELogoBR%20K2.png" alt="Logo Kleber Silveira" class="h-12 w-auto">
+                </a>
                 <div class="flex items-center">
                     <a href="#sobre" class="nav-link group" data-section="sobre"><img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Sobre Mim</span></a>
                     <a href="#projetos" class="nav-link group ml-4" data-section="projetos"><img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Projetos</span></a>
@@ -409,9 +423,9 @@
                         <div class="logo-item"><img src="https://markideng.github.io/web/HybelLogo.png" alt="Hybel"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/TritonLogo.jpeg" alt="Triton"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/Menegotti Logo.png" alt="Menegotti"></div>
-                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico" class="logo-artico"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/2RiosLogo.png" alt="2Rios"></div>
-                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle" class="logo-chantelle"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/AfribLogo.png" alt="Afrb"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/AcquamiresLogo.png" alt="Acquamires"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/FrigolasteLogo.jpg" alt="Frigolaste"></div>
@@ -433,9 +447,9 @@
                         <div class="logo-item"><img src="https://markideng.github.io/web/HybelLogo.png" alt="Hybel"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/TritonLogo.jpeg" alt="Triton"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/Menegotti Logo.png" alt="Menegotti"></div>
-                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico" class="logo-artico"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/2RiosLogo.png" alt="2Rios"></div>
-                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle" class="logo-chantelle"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/AfribLogo.png" alt="Afrb"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/AcquamiresLogo.png" alt="Acquamires"></div>
                         <div class="logo-item"><img src="https://markideng.github.io/web/FrigolasteLogo.jpg" alt="Frigolaste"></div>
@@ -531,9 +545,18 @@
         // Ajustar no carregamento da página e no redimensionamento da janela
         window.addEventListener('load', adjustCarouselSize);
         window.addEventListener('resize', adjustCarouselSize);
+        
+        // Link do logo para o topo
+        document.getElementById('home-logo-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
 
         // Rolagem suave e destaque do menu
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a.nav-link[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });

@@ -171,10 +171,9 @@
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 1rem;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: box-shadow 0.3s ease-in-out;
         }
         .logo-carousel-container:hover {
-            transform: scale(1.03);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
         .logo-carousel-container:hover .logos-track {
@@ -203,7 +202,7 @@
         .logo-carousel-horizontal { height: 120px; display: flex; align-items: center;}
         .logo-carousel-horizontal .logos-track {
             display: flex;
-            animation: slideRight 25s linear infinite;
+            animation: slideRight 40s linear infinite;
         }
         .logo-carousel-horizontal .logo-item {
             flex-shrink: 0;
@@ -223,13 +222,17 @@
             max-width: 120px;
             width: auto;
             height: auto;
-            filter: grayscale(100%);
-            opacity: 0.8;
-            transition: filter 0.3s, opacity 0.3s;
-        }
-        .logo-carousel-container:hover img {
-            filter: grayscale(0%);
             opacity: 1;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .logo-carousel-container .logo-item:hover img {
+            transform: scale(1.2);
+        }
+        
+        .logo-carousel-container .logo-item:hover {
+            position: relative;
+            z-index: 10;
         }
 
         /* Estilos do Modal de Habilidades */
@@ -389,6 +392,31 @@
 					<li>Melhorar o indicador de OEE e equipes.</li></ul></div>
                 <div class="logo-carousel-container logo-carousel-horizontal col-span-1 md:col-span-2 lg:col-span-3 -mx-4">
                     <div class="logos-track">
+                        <!-- Lista de logos original -->
+                        <div class="logo-item"><img src="https://markideng.github.io/web/BRFLogo.png" alt="BRF"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/HidroLogo.png" alt="HidroAlcoa"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FibrafortLogo.jpg" alt="Fibrafort"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/PortoItajaiLogo.jpg" alt="Porto Itajai"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/RiosulenseLogo.webp" alt="Riosulense"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FeyLogo.png" alt="Fey"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/KoviLogo.png" alt="Kovi"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/TuperLogo.png" alt="Tuper"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/MinusaLogo.png" alt="Minusa"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/CSMLogo.webp" alt="CSM"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/KohmarLogo.png" alt="Kohmar"></div>
+						<div class="logo-item"><img src="https://markideng.github.io/web/FundipressLogo.jpeg" alt="Fundipress"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/SenaiLogo.png" alt="Senai"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/HybelLogo.png" alt="Hybel"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/TritonLogo.jpeg" alt="Triton"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/Menegotti Logo.png" alt="Menegotti"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ArticoLogo.jpg" alt="Artico"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/2RiosLogo.png" alt="2Rios"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/ChantelleLogo.webp" alt="Chantelle"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/AfribLogo.png" alt="Afrb"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/AcquamiresLogo.png" alt="Acquamires"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/FrigolasteLogo.jpg" alt="Frigolaste"></div>
+                        <div class="logo-item"><img src="https://markideng.github.io/web/rohden_queimadores_logo.jpeg" alt="Rohden"></div>
+                        <!-- Lista de logos duplicada para o efeito de loop -->
                         <div class="logo-item"><img src="https://markideng.github.io/web/BRFLogo.png" alt="BRF"></div>
 						<div class="logo-item"><img src="https://markideng.github.io/web/HidroLogo.png" alt="HidroAlcoa"></div>
 						<div class="logo-item"><img src="https://markideng.github.io/web/FibrafortLogo.jpg" alt="Fibrafort"></div>

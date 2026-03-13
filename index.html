@@ -47,51 +47,111 @@
             z-index: 1000;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        /* Wrapper hexagonal para cada botão do menu */
+        .nav-hex-wrapper {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            margin-left: 0.75rem;
+        }
+
+        /* Wrapper hexagonal para cada botão do menu */
+        .nav-hex-wrapper {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            margin-left: 0.75rem;
+            --hex: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* Camada de borda branca (hexágono maior) */
+        .nav-hex-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: #fff;
+            clip-path: var(--hex);
+            transition: background-color 0.22s ease, transform 0.22s ease;
+            z-index: 0;
+        }
+
+        /* Camada interior (recuo de 2.5px cria efeito de borda) */
+        .nav-hex-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 2.5px;
+            background-color: #1a202c; /* cor do navbar — "transparente" visualmente */
+            clip-path: var(--hex);
+            transition: background-color 0.22s ease, transform 0.22s ease;
+            z-index: 0;
+        }
+
+        /* Hover: interior branco → ícone sobre fundo branco */
+        .nav-hex-wrapper:hover::before { transform: scale(1.08); }
+        .nav-hex-wrapper:hover::after  { background-color: #fff; transform: scale(1.08); }
+
+        /* Ativo: tudo azul */
+        .nav-hex-wrapper.active::before { background-color: #4299e1; box-shadow: 0 0 14px rgba(66,153,225,0.6); }
+        .nav-hex-wrapper.active::after  { background-color: #4299e1; }
+
         .nav-link {
-            color: #cbd5e0; /* Cor do texto do link */
-            padding: 0.75rem; /* Ajuste para padding simétrico */
-            border-radius: 0.25rem; /* Padrão quadrado */
-            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-radius 0.2s ease-in-out, box-shadow 0.2s ease-in-out, clip-path 0.2s ease-in-out; /* Adiciona transição para borda, sombra e clip-path */
+            color: #cbd5e0;
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative; /* Necessário para posicionar o texto ao passar o mouse */
+            width: 100%;
+            height: 100%;
         }
-        .nav-link:hover {
-            background-color: #4a5568; /* Fundo ao passar o mouse */
-            color: #fff;
-            border-radius: 9999px; /* Torna o contorno circular ao passar o mouse */
-            box-shadow: 0 0 15px rgba(66, 153, 225, 0.6); /* Sombra circular azul ao passar o mouse */
-        }
-        .nav-link.active {
-            background-color: #4299e1; /* Fundo do link ativo */
-            color: #fff;
-            font-weight: 600;
-            border-radius: 0; /* Remove border-radius para aplicar clip-path */
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); /* Forma hexagonal */
-            box-shadow: 0 0 0 3px #4299e1; /* Sombra como contorno do ícone/botão */
-        }
+
         .nav-link img {
-            margin-bottom: 4px; /* Espaço entre o ícone e o texto */
+            position: relative;
+            z-index: 1;
+            transition: filter 0.22s ease;
         }
+
+        /* Hover: fundo branco → ícone fica escuro para contrastar */
+        .nav-hex-wrapper:hover .nav-link img {
+            filter: brightness(0);
+        }
+
+        /* Ativo (azul): ícone branco */
+        .nav-hex-wrapper.active .nav-link img {
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-hex-wrapper.active .nav-link {
+            font-weight: 600;
+        }
+
+        /* Tooltip */
         .nav-link .tooltip-text {
             position: absolute;
-            bottom: -2.5rem; /* Posição abaixo do ícone */
+            bottom: -2.2rem;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #4a5568; /* Fundo do tooltip */
+            background-color: #4a5568;
             color: #fff;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
-            font-size: 0.75rem; /* Tamanho da fonte do tooltip */
-            white-space: nowrap; /* Impede que o texto quebre a linha */
+            font-size: 0.75rem;
+            white-space: nowrap;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-            z-index: 1001; /* Garante que o tooltip fique acima de outros elementos */
+            z-index: 1001;
+            pointer-events: none;
         }
-        .nav-link:hover .tooltip-text {
+        .nav-hex-wrapper:hover .tooltip-text {
             opacity: 1;
             visibility: visible;
         }
@@ -122,14 +182,36 @@
             border-color: #cbd5e0; /* Borda clara */
         }
         
-        /* Imagens de fundo para cada seção */
-        #sobre { background-image: url('https://placehold.co/1920x1080/005f60/FFFFFF?text=Sobre&font_size=33&font=Playfair%20Display'); }
-        #projetos { background-image: url('https://placehold.co/1920x1080/4a005f/FFFFFF?text=Projetos&font_size=33&font=Playfair%20Display'); }
-        #experiencia { background-image: url('https://placehold.co/1920x1080/004d40/FFFFFF?text=Experiencias&font_size=33&font=Playfair%20Display'); }
-        #educacao { background-image: url('https://placehold.co/1920x1080/604000/FFFFFF?text=Educacao&font_size=33&font=Playfair%20Display'); }
-        #habilidades { background-image: url('https://placehold.co/1920x1080/600020/FFFFFF?text=Conhecimentos&font_size=33&font=Playfair%20Display'); }
-        #cursos { background-image: url('https://placehold.co/1920x1080/203040/FFFFFF?text=Cursos&font_size=33&font=Playfair%20Display'); }
-        #contato { background-image: url('https://placehold.co/1920x1080/002060/FFFFFF?text=Contato&font_size=33&font=Playfair%20Display'); }
+        /* Imagens de fundo para cada seção — Unsplash (uso gratuito) */
+
+        /* Sobre: grade hexagonal metálica — remete a engenharia e estrutura */
+        #sobre {
+            background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80');
+        }
+        /* Projetos: placa de circuito eletrônico iluminada — tecnologia e inovação */
+        #projetos {
+            background-image: url('https://images.unsplash.com/photo-1562408590-e32931084e23?w=1920&q=80');
+        }
+        /* Experiência: interior industrial limpo com maquinário moderno */
+        #experiencia {
+            background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80');
+        }
+        /* Educação: biblioteca moderna, arquitetura clean e futurista */
+        #educacao {
+            background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1920&q=80');
+        }
+        /* Habilidades: abstrato de linhas de luz / fibra óptica — velocidade e conhecimento */
+        #habilidades {
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80');
+        }
+        /* Cursos: mesa de trabalho minimalista com tecnologia — aprendizado e foco */
+        #cursos {
+            background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80');
+        }
+        /* Contato: cidade futurista à noite — conexão e comunicação */
+        #contato {
+            background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1920&q=80');
+        }
 
         /* Imagem sextavada na seção Sobre */
         .hexagon-container {
@@ -255,13 +337,27 @@
                     <img src="https://markideng.github.io/web/MIELogoBR%20K2.png" alt="Logo Kleber Silveira" class="h-12 w-auto">
                 </a>
                 <div class="flex items-center">
-                    <a href="#sobre" class="nav-link group" data-section="sobre"><img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Sobre Mim</span></a>
-                    <a href="#projetos" class="nav-link group ml-4" data-section="projetos"><img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Projetos</span></a>
-                    <a href="#experiencia" class="nav-link group ml-4" data-section="experiencia"><img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Experiência</span></a>
-                    <a href="#educacao" class="nav-link group ml-4" data-section="educacao"><img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Educação</span></a>
-                    <a href="#habilidades" class="nav-link group ml-4" data-section="habilidades"><img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Habilidades</span></a>
-                    <a href="#cursos" class="nav-link group ml-4" data-section="cursos"><img src="https://markideng.github.io/web/SiteMie%20Projetos.png" alt="Ícone Cursos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Cursos</span></a>
-                    <a href="#contato" class="nav-link group ml-4" data-section="contato"><img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Contato</span></a>
+                    <div class="nav-hex-wrapper" data-section="sobre">
+                        <a href="#sobre" class="nav-link group"><img src="https://markideng.github.io/web/Id%20Delegado.png" alt="Ícone Sobre Mim" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Sobre Mim</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="projetos">
+                        <a href="#projetos" class="nav-link group"><img src="https://markideng.github.io/web/SiteMie%20Processos.png" alt="Ícone Projetos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Projetos</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="experiencia">
+                        <a href="#experiencia" class="nav-link group"><img src="https://markideng.github.io/web/SiteMie%20Experiencia.png" alt="Ícone Experiência" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Experiência</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="educacao">
+                        <a href="#educacao" class="nav-link group"><img src="https://markideng.github.io/web/SiteMieEstudos.png" alt="Ícone Educação" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Educação</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="habilidades">
+                        <a href="#habilidades" class="nav-link group"><img src="https://markideng.github.io/web/SiteMieConhecimentos.png" alt="Ícone Habilidades" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Habilidades</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="cursos">
+                        <a href="#cursos" class="nav-link group"><img src="https://markideng.github.io/web/SiteMie%20Projetos.png" alt="Ícone Cursos" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Cursos</span></a>
+                    </div>
+                    <div class="nav-hex-wrapper" data-section="contato">
+                        <a href="#contato" class="nav-link group"><img src="https://markideng.github.io/web/SiteMieContato.png" alt="Ícone Contato" class="h-5 w-5 sm:h-6 sm:w-6"><span class="tooltip-text">Contato</span></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -454,11 +550,27 @@
         <div class="overlay"></div>
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Educação</h2>
-            <div class="space-y-6">
-                <div><h3 class="text-xl font-bold">Pós-Graduação em Marketing</h3><p class="text-gray-200">Faculdade Cenecista Joinville (FCJ) - 2005 a 2006</p></div>
-                <div><h3 class="text-xl font-bold">Graduação em Engenharia de Produção</h3><p class="text-gray-200">UNISociesc – TUPY - 2010 a 2013</p></div>
-                <div><h3 class="text-xl font-bold">Graduação em Desenho Industrial (Projeto de Produtos)</h3><p class="text-gray-200">UTESC - 1999 a 2004</p></div>
-                <div><h3 class="text-xl font-bold">Técnico em Mecânica</h3><p class="text-gray-200">CIS - Dario Geraldo Salles - 1991 a 1995</p></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Pós-Graduação em Marketing</h3>
+                    <p class="text-gray-200">Faculdade Cenecista Joinville (FCJ)</p>
+                    <p class="text-gray-300 text-sm mt-1">2005 a 2006</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Graduação em Engenharia de Produção</h3>
+                    <p class="text-gray-200">UNISociesc – TUPY</p>
+                    <p class="text-gray-300 text-sm mt-1">2010 a 2013</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Graduação em Desenho Industrial (Projeto de Produtos)</h3>
+                    <p class="text-gray-200">UTESC</p>
+                    <p class="text-gray-300 text-sm mt-1">1999 a 2004</p>
+                </div>
+                <div class="p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-white">Técnico em Mecânica</h3>
+                    <p class="text-gray-200">CIS - Dario Geraldo Salles</p>
+                    <p class="text-gray-300 text-sm mt-1">1991 a 1995</p>
+                </div>
             </div>
         </div>
     </section>
@@ -481,9 +593,28 @@
         <div class="overlay"></div>
         <div class="max-w-4xl mx-auto content">
             <h2 class="text-3xl font-semibold section-heading">Cursos e Treinamentos</h2>
-            <ul class="list-disc list-inside text-gray-200">
-                <li>Green Belt Six Sigma</li> <li>Lean Office</li> <li>Ferros Fundidos e Defeitos de Fundição</li> <li>Confiabilidade de Peças Plástico</li> <li>Caracterização e Reologia de Polímeros - Moldflow</li> <li>Forjamento</li> <li>Poka Yoke</li> <li>ISO TS 16949</li> <li>Auditor Interno ISO 14000</li> <li>Propriedade Industrial e Intelectual</li> <li>Leader Training - PNL</li> <li>Auditores de Sistema da Qualidade</li> <li>Custos Industriais</li> <li>Gerenciamento de Projetos</li> <li>GD&T</li>
-            </ul>
+            <div class="grid grid-cols-1 gap-8">
+                <div class="p-4 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+                    <h3 class="text-xl font-bold mb-3 text-white">Formações Complementares</h3>
+                    <ul class="list-disc list-inside text-gray-200">
+                        <li>Green Belt Six Sigma</li>
+                        <li>Lean Office</li>
+                        <li>Ferros Fundidos e Defeitos de Fundição</li>
+                        <li>Confiabilidade de Peças Plástico</li>
+                        <li>Caracterização e Reologia de Polímeros - Moldflow</li>
+                        <li>Forjamento</li>
+                        <li>Poka Yoke</li>
+                        <li>ISO TS 16949</li>
+                        <li>Auditor Interno ISO 14000</li>
+                        <li>Propriedade Industrial e Intelectual</li>
+                        <li>Leader Training - PNL</li>
+                        <li>Auditores de Sistema da Qualidade</li>
+                        <li>Custos Industriais</li>
+                        <li>Gerenciamento de Projetos</li>
+                        <li>GD&T</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -499,6 +630,34 @@
                 <p class="text-lg"><a href="https://www.markideng.com" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">www.markideng.com</a></p>
                 <p class="text-lg"><a href="https://linkedin.com/in/markideng/" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">linkedin.com/in/markideng/</a></p>
                 <p class="text-lg">Rua Prudente de Moraes, 613 – Joinville – SC.</p>
+            </div>
+            <!-- Link para download do currículo em PDF -->
+            <div class="mt-10">
+                <a href="https://markideng.github.io/web/26KleberSilveiraLidEngK1.pdf" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex flex-col items-center gap-2 group">
+                    <div class="relative">
+                        <!-- Ícone PDF SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" class="w-20 h-20 drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
+                            <!-- Corpo do arquivo -->
+                            <rect x="4" y="0" width="56" height="72" rx="5" ry="5" fill="#e53e3e"/>
+                            <!-- Dobra do canto superior direito -->
+                            <polygon points="44,0 60,16 44,16" fill="#c53030"/>
+                            <polygon points="44,0 60,16 44,16 44,0" fill="#fff" opacity="0.25"/>
+                            <!-- Texto PDF -->
+                            <text x="32" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="#fff" letter-spacing="1">PDF</text>
+                            <!-- Linha decorativa -->
+                            <rect x="10" y="58" width="44" height="2.5" rx="1.5" fill="#fff" opacity="0.5"/>
+                            <!-- Ícone de download (seta) -->
+                            <g transform="translate(32,30)">
+                                <line x1="0" y1="-8" x2="0" y2="8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+                                <polyline points="-5,4 0,10 5,4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <span class="text-white text-sm font-semibold group-hover:text-blue-300 transition-colors duration-200">
+                        Baixar Currículo em PDF
+                    </span>
+                </a>
             </div>
         </div>
     </section>
@@ -553,7 +712,7 @@
         });
 
         const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+        const navWrappers = document.querySelectorAll('.nav-hex-wrapper');
         window.addEventListener('scroll', () => {
             let current = '';
             const scrollY = window.pageYOffset;
@@ -571,15 +730,15 @@
                 });
             }
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.section === current) {
-                    link.classList.add('active');
+            navWrappers.forEach(wrapper => {
+                wrapper.classList.remove('active');
+                if (wrapper.dataset.section === current) {
+                    wrapper.classList.add('active');
                 }
             });
         });
         window.addEventListener('load', () => {
-            if (navLinks.length > 0) navLinks[0].classList.add('active');
+            if (navWrappers.length > 0) navWrappers[0].classList.add('active');
         });
 
         // Lógica do Carrossel Principal
@@ -607,7 +766,7 @@
             }
 
             function startCarousel() {
-                stopCarousel(); // Garante que não haja múltiplos intervalos
+                stopCarousel();
                 interval = setInterval(nextImage, 3000);
             }
 
@@ -664,7 +823,7 @@
                 try {
                     const prompt = `Explique o conceito de "${skillName}" de forma concisa e relevante para um contexto profissional.`;
                     const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-                    const apiKey = ""; // A chave de API será fornecida pelo ambiente
+                    const apiKey = "";
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                     
                     const response = await fetch(apiUrl, {
@@ -699,6 +858,3 @@
     </script>
 </body>
 </html>
-
-
-
